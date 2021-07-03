@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
                                  "background-color:rgb(100,100,100)")
         self.label.setText("")
         self.label.setObjectName("label")
-        response = requests.get("https://free.currconv.com/api/v7/currencies?apiKey=40488c796a010b982a9a")
+        response = requests.get("https://free.currconv.com/api/v7/currencies?apiKey=Your API key")
         data = json.loads(response.text)
         currencies = list(data['results'].keys())
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
@@ -64,8 +64,7 @@ class Ui_MainWindow(object):
         self.pushButton.setObjectName("pushButton")
         self.pushButton.setIcon(QtGui.QIcon('convert-01.png'))
         self.pushButton.setIconSize(QtCore.QSize(60, 60))
-        # self.pushButton.clicked.connect(self.onclick)
-        self.pushButton.clicked.connect(self.onclick2)
+        self.pushButton.clicked.connect(self.onclick)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -75,25 +74,12 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "PyConverter"))
 
-    # def onclick(self):
-    #     t = QtGui.QTransform()
-    #     self.anim = QtCore.QVariantAnimation()
-    #     self.anim.valueChanged.connect(lambda: t.rotate((360 - 360 / 56)))
-    #     self.anim.valueChanged.connect(
-    #         lambda: self.pushButton.setIcon(QtGui.QIcon(QtGui.QIcon('convert-01.png').pixmap(60, 60).transformed(t)
-    #                                                     )))
-    #     self.anim.setStartValue(360.)
-    #     self.anim.setEndValue(0.)
-    #     self.anim.setDuration(1000)
-    #     self.anim.start()
-
-    def onclick2(self):
+    def onclick(self):
         cfrom = str(self.comboBox.currentText())
         cto = str(self.comboBox_3.currentText())
         cval = float(self.lineEdit.text())
 
         response = requests.get(
-            f"https://free.currconv.com/api/v7/convert?q={cfrom}_{cto}&compact=ultra&apiKey=40488c796a010b982a9a")
+            f"https://free.currconv.com/api/v7/convert?q={cfrom}_{cto}&compact=ultra&apiKey=Your API key")
         data = json.loads(response.text)
         self.label.setText(f"{data[f'{cfrom}_{cto}'] * cval:.2f}")
-
